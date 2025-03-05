@@ -1,0 +1,843 @@
+/*=============== GOOGLE FONTS ===============*/
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+/*=============== VARIABLES CSS ===============*/
+:root {
+  --header-height: 3.5rem;
+
+  /*========== Colors ==========*/
+  /*Color mode HSL(hue, saturation, lightness)*/
+  /* 
+      Change favorite color
+      Default: hsl(162, 100%, 40%)
+      Orange: hsl(14, 100%, 65%) - Blue: hsl(210, 100%, 70%)
+      Pink: hsl(356, 100%, 75%) - Purple: hsl(250, 100%, 75%)
+
+      For more colors visit: https://colors.dopely.top/color-pedia
+      -> Choose any color 
+      -> click on tab (Color Conversion)
+      -> Copy the color mode (HSL)
+  */
+
+  --hue: 162;
+  --first-color: hsl(var(--hue), 100%, 40%);
+  --first-color-alt: hsl(var(--hue), 56%, 35%);
+  --title-color: hsl(228, 8%, 95%);
+  --text-color: hsl(228, 8%, 65%);
+  --body-color: hsl(0, 0%, 0%);
+  --container-color: hsl(228, 15%, 15%);
+
+  /*========== Font and typography ==========*/
+  /*.5rem = 8px | 1rem = 16px ...*/
+  --body-font: "Poppins", sans-serif;
+  --biggest-font-size: 2rem;
+  --bigger-font-size: 1.25rem;
+  --h1-font-size: 1.5rem;
+  --h2-font-size: 1.25rem;
+  --h3-font-size: 1rem;
+  --normal-font-size: .938rem;
+  --small-font-size: .813rem;
+  --smaller-font-size: .75rem;
+
+  /*========== Font weight ==========*/
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semi-bold: 600;
+
+  /*========== z index ==========*/
+  --z-tooltip: 10;
+  --z-fixed: 100;
+}
+
+/*========== Responsive typography ==========*/
+@media screen and (min-width: 1152px) {
+  :root {
+    --biggest-font-size: 4rem;
+    --bigger-font-size: 2rem;
+    --h1-font-size: 2.25rem;
+    --h2-font-size: 1.5rem;
+    --h3-font-size: 1.25rem;
+    --normal-font-size: 1rem;
+    --small-font-size: .875rem;
+    --smaller-font-size: .813rem;
+  }
+}
+
+/*=============== BASE ===============*/
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+input,
+textarea,
+button,
+body {
+  font-family: var(--body-font);
+  font-size: var(--normal-font-size);
+}
+
+body {
+  background-color: var(--body-color);
+  color: var(--text-color);
+}
+
+input,
+textarea,
+button {
+  outline: none;
+  border: none;
+}
+
+h1, h2, h3, h4 {
+  color: var(--title-color);
+  font-weight: var(--font-medium);
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+img,
+svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/*=============== REUSABLE CSS CLASSES ===============*/
+.container {
+  max-width: 1120px;
+  margin-inline: 1.5rem;
+}
+
+.grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.section {
+  padding-block: 5rem 2rem;
+}
+
+.section__title, 
+.section__subtitle {
+  text-align: center;
+  color: var(--title-color);
+  font-weight: var(--font-semi-bold);
+}
+
+.section__title {
+  font-size: var(--h1-font-size);
+  margin-bottom: 1.5rem;
+}
+
+.section__subtitle {
+  font-size: var(--small-font-size);
+  margin-bottom: .25rem;
+}
+
+.section__subtitle span {
+  color: var(--first-color);
+}
+
+.main {
+  overflow: hidden; /* For animation ScrollReveal */
+}
+
+/*=============== HEADER & NAV ===============*/
+.header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  z-index: var(--z-fixed);
+  transition: 0.3s;
+}
+
+/* Change background when scrolling */
+.header.scroll {
+  background-color: var(--container-color);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.nav {
+  height: var(--header-height);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav__logo {
+  font-size: 1.5rem;
+  color: #fff;
+  text-shadow: 0 0 20px #3e9bae,
+               0 0 30px #3e9bae,
+               0 0 40px #3e9bae,
+               0 0 50px #3e9bae,
+               0 0 60px #3e9bae;
+}
+
+.nav__logo span {
+  color: var(--first-color);
+}
+
+.nav__list {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav__link {
+  color: var(--text-color);
+  font-weight: var(--font-medium);
+  transition: color 0.3s;
+}
+
+.nav__link:hover {
+  color: var(--first-color);
+}
+
+/* Mobile menu - hidden offscreen by default */
+.nav__menu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 60%;
+  height: 100%;
+  background-color: var(--container-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: right 0.3s;
+  z-index: var(--z-fixed);
+}
+
+.nav__menu.show {
+  right: 0;
+}
+
+/* Toggle and Close Icons */
+.nav__toggle,
+.nav__close {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.nav__close {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  display: none;
+}
+
+.nav__toggle {
+  display: none;
+}
+
+/* Responsive Navigation for Mobile */
+@media screen and (max-width: 768px) {
+  .nav__toggle {
+    display: block;
+  }
+  
+  /* Stack nav links vertically on mobile */
+  .nav__list {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .nav__close {
+    display: block;
+  }
+}
+@media screen and (min-width: 769px) {
+  /* Make the nav menu static (always visible) */
+  .nav__menu {
+    position: static;
+    width: auto;
+    height: auto;
+    background-color: transparent;
+    display: block;
+    transition: none;
+  }
+  
+  /* Hide the toggle and close buttons on desktop */
+  .nav__toggle,
+  .nav__close {
+    display: none;
+  }
+  
+  /* Ensure the nav list displays horizontally */
+  .nav__list {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+  }
+}
+
+
+
+
+/*=============== HOME ===============*/
+.home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  overflow: hidden; /* Prevents the next section from peeking */
+}
+
+.home__container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+  gap: 2rem;
+}
+
+.home__data {
+  text-align: left;
+  
+  /* Universal vertical spacing for each child (except the last) */
+  /* Adjust '1.5rem' to your preferred spacing */
+  > *:not(:last-child) {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.home__subtitle {
+  font-size: var(--h3-font-size);
+  font-weight: var(--font-medium);
+}
+
+.home__subtitle span {
+  color: var(--first-color);
+}
+
+.home__title {
+  font-size: var(--biggest-font-size);
+  font-weight: var(--font-semi-bold);
+  color: var(--title-color);
+}
+
+.home__education {
+  font-size: var(--h2-font-size);
+  font-weight: var(--font-medium);
+  color: var(--first-color);
+}
+
+/* Remove default margin since we have a universal spacing rule now */
+.home__description {
+  font-size: var(--normal-font-size);
+  max-width: 400px;
+  color: var(--text-color);
+}
+
+/* Home Social Icons */
+/* Remove margin-top so the universal spacing applies consistently */
+.home__social {
+  display: flex;
+  gap: 1rem;
+}
+
+.home__social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: var(--container-color);
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+.home__social-link:hover {
+  background-color: var(--first-color);
+}
+
+.home__social-link i {
+  font-size: 1.25rem;
+  color: var(--title-color);
+}
+
+.button {
+  display: inline-block;
+  background-color: var(--first-color);
+  color: var(--title-color);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: var(--font-medium);
+  transition: 0.3s;
+}
+
+.button:hover {
+  background-color: var(--first-color-alt);
+}
+
+/* Profile Image */
+.home__image {
+  text-align: center;
+}
+
+.home__image img {
+  max-width: 300px;
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+  transition: 0.3s;
+}
+
+.home__image img:hover {
+  transform: scale(1.05);
+}
+
+
+/*=============== GLOW EFFECTS ===============*/
+
+/* Neon Text Glow */
+.glow-text {
+  color: var(--first-color);
+  text-shadow: 0 0 10px var(--first-color), 
+               0 0 20px var(--first-color-alt), 
+               0 0 40px var(--first-color-alt);
+}
+
+
+
+/*=============== BUTTON ===============*/
+
+
+/*=============== ABOUT SECTION ===============*/
+.about__container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two equal columns */
+  gap: 2rem;                             /* Space between columns */
+  align-items: center;                   /* Vertically center content */
+}
+
+.about__img {
+  justify-self: center;                  /* Center the image horizontally */
+}
+
+.about__img img {
+  width: 300px;
+  border-radius: 1rem;                   /* Slightly rounded corners */
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+  object-fit: cover;                     /* Crop/cover the container if needed */
+}
+
+.about__data {
+  text-align: left;
+}
+
+/* Spacing between child elements in about__data */
+.about__data > *:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
+.section__title {
+  /* Already defined in your global styles; adjust if needed */
+  font-size: var(--h1-font-size);
+  color: var(--title-color);
+}
+
+.section__subtitle {
+  /* Optional: smaller subtitle styling */
+  font-size: var(--small-font-size);
+  color: var(--first-color);
+}
+
+.about__description {
+  max-width: 500px;
+  line-height: 1.6;
+  color: var(--text-color);
+}
+
+.button {
+  /* Reuse your existing button styles */
+  background-color: var(--first-color);
+  color: var(--title-color);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: var(--font-medium);
+  transition: 0.3s;
+}
+
+.button:hover {
+  background-color: var(--first-color-alt);
+}
+
+@media screen and (max-width: 768px) {
+  .about__container {
+    grid-template-columns: 1fr; /* Single column for mobile */
+    text-align: center;
+  }
+
+  .about__img img {
+    width: 250px;
+  }
+}
+
+
+/*=============== SKILLS ===============*/
+/*=============== SKILLS SECTION ===============*/
+.skills__container {
+  max-width: 800px;       /* Limits the container width */
+  margin: 0 auto;         /* Centers the container */
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.section__title {
+  font-size: var(--h1-font-size);
+  color: var(--title-color);
+}
+
+.section__subtitle {
+  font-size: var(--small-font-size);
+  color: var(--first-color);
+  margin-bottom: 1rem;
+}
+
+.skills__description {
+  max-width: 600px;
+  margin: 0 auto 2rem auto;
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+/* Skills list styling */
+.skills__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  list-style: none;
+}
+
+.skills__item {
+  background-color: var(--container-color);
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: var(--font-medium);
+  transition: 0.3s;
+}
+
+.skills__item:hover {
+  background-color: var(--first-color);
+  color: var(--title-color);
+}
+
+
+/*=============== SERVICES ===============*/
+/*=============== SERVICES SECTION ===============*/
+.services__container {
+  text-align: center;
+  padding: 2rem 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section__subtitle {
+  font-size: var(--small-font-size);
+  color: var(--first-color);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.section__title {
+  font-size: var(--h2-font-size);
+  font-weight: var(--font-semi-bold);
+  color: var(--title-color);
+}
+
+/* Services Grid */
+.services__content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+/* Individual Service Card */
+.services__item {
+  background-color: var(--container-color);
+  border: 2px solid transparent;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  transition: 0.3s;
+}
+
+/* Hover effect: neon glow */
+.services__item:hover {
+  border-color: var(--first-color);
+  box-shadow: 0 0 15px var(--first-color);
+}
+
+/* Service Icon */
+
+
+/* Service Title */
+.services__title {
+  margin-bottom: 0.5rem;
+  font-size: var(--h2-font-size);
+  font-weight: var(--font-semi-bold);
+  color: var(--title-color);
+}
+
+/* Service Description */
+.services__description {
+  font-size: var(--normal-font-size);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+
+/*=============== PROJECTS ===============*/
+/*=============== PROJECTS SECTION ===============*/
+.projects__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.section__title {
+  font-size: var(--h2-font-size);
+  font-weight: var(--font-semi-bold);
+  color: var(--title-color);
+}
+
+.section__subtitle {
+  font-size: var(--small-font-size);
+  color: var(--first-color);
+  margin-bottom: 1rem;
+}
+
+.projects__content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.projects__card {
+  background-color: var(--container-color);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  text-align: left;
+  transition: 0.3s;
+}
+
+.projects__card:hover {
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+}
+
+.projects__img {
+  width: 100%;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.projects__title {
+  font-size: var(--h3-font-size);
+  color: var(--title-color);
+  margin-bottom: 0.5rem;
+}
+
+.projects__description {
+  font-size: var(--normal-font-size);
+  color: var(--text-color);
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.projects__button {
+  display: inline-block;
+  background-color: var(--first-color);
+  color: var(--title-color);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: var(--font-medium);
+  transition: 0.3s;
+  text-decoration: none;
+}
+
+.projects__button:hover {
+  background-color: var(--first-color-alt);
+}
+
+
+/*=============== CONTACT ===============*/
+
+.contact__container {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.contact__form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.contact__input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--container-color);
+  background-color: var(--body-color);
+  color: var(--text-color);
+  transition: 0.3s;
+}
+
+.contact__input:focus {
+  outline: none;
+  border-color: var(--first-color);
+}
+
+/* Reusing existing .button styling for the submit button */
+.button {
+  display: inline-block;
+  background-color: var(--first-color);
+  color: var(--title-color);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: var(--font-medium);
+  transition: 0.3s;
+  cursor: pointer;
+  border: none;
+}
+
+.button:hover {
+  background-color: var(--first-color-alt);
+}
+
+
+/*=============== FOOTER ===============*/
+
+.footer {
+  background-color: var(--container-color);
+  padding: 2rem 0;
+  text-align: center;
+}
+
+.footer__container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer__title {
+  font-size: var(--h2-font-size);
+  font-weight: var(--font-semi-bold);
+  color: var(--title-color);
+  margin-bottom: 0.5rem;
+}
+
+.footer__title span {
+  color: var(--first-color);
+}
+
+.footer__education {
+  font-size: var(--small-font-size);
+  color: var(--text-color);
+  margin-bottom: 1rem;
+}
+
+.footer__social {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.footer__social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: var(--body-color);
+  border-radius: 50%;
+  transition: 0.3s;
+  font-size: 1.25rem;
+  color: var(--title-color);
+}
+
+.footer__social-link:hover {
+  background-color: var(--first-color);
+}
+
+.footer__copy {
+  font-size: var(--small-font-size);
+  color: var(--text-color);
+}
+
+
+/*=============== SCROLL BAR ===============*/
+
+
+/*=============== SCROLL UP ===============*/
+
+
+/* Show Scroll Up */
+
+/*=============== BREAKPOINTS ===============*/
+/* For small devices (e.g., mobile phones) */
+@media screen and (max-width: 600px) {
+  /* Example: Stack elements vertically, adjust padding, and font sizes */
+  .container {
+    padding: 0 1rem;
+  }
+  
+  .home__container {
+    grid-template-columns: 1fr; /* Stack columns */
+  }
+  
+  .section__title {
+    font-size: 1.75rem;
+  }
+}
+
+/* For medium devices (e.g., tablets) */
+@media screen and (min-width: 601px) and (max-width: 1024px) {
+  /* Example: Use two columns and adjust spacing */
+  .container {
+    padding: 0 2rem;
+  }
+  
+  .home__container {
+    grid-template-columns: 1fr 1fr; /* Two columns */
+  }
+  
+  .section__title {
+    font-size: 2.5rem;
+  }
+}
+
+/* For large devices (e.g., desktops) */
+@media screen and (min-width: 1025px) {
+  /* Example: Use more space and revert to default styling */
+  .container {
+    padding: 0 3rem;
+  }
+  
+  .home__container {
+    grid-template-columns: repeat(2, 1fr); /* Two equal columns */
+  }
+  
+  .section__title {
+    font-size: var(--h1-font-size); /* Use your global variable */
+  }
+}
